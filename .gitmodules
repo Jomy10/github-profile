@@ -1,0 +1,4 @@
+[submodule "github-colors"]
+	path = "github-colors".
+	url = git://github.com/jomy10/github-colors.git
+
