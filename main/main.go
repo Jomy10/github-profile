@@ -66,6 +66,7 @@ func drawLanguages(img *image.RGBA, fontCtx *freetype.Context) {
 	// This line is for debugging
 	// languagesCount := map[string]uint{"Rust": 1000, "Swift": 500, "Java": 200, "JavaScript": 100, "HTML": 50, "CSS": 10, "Go": 1, "WebAssembly": 400, "Python": 65, "Shell": 457, "SCSS": 67}
 	languagesCount := githubApi.FetchUserLanguages("jomy10", readToken(), false, true, []string{}, []string{}, []string{}, []string{"Jomy10/website"})
+	// Add additional repos
 	// Filter some languages
 	delete(languagesCount, "Procfile")
 	delete(languagesCount, "Svelte")
@@ -149,6 +150,8 @@ func drawLanguages(img *image.RGBA, fontCtx *freetype.Context) {
 			}
 
 			// Combine logos into 1 image
+			// TODO: #2 add logo width and height. height will be = logoSize while width will be changed to accomodate
+			//	     more languages so that there are only 2 rows of languages
 			logoImg = getMultiLangImage(_langs, logoSize)
 
 			jimage.ExportImage(logoImg, "test.png")
@@ -234,6 +237,10 @@ func drawFrameworks(img *image.RGBA, fontCtx *freetype.Context) {
 	const marginBetween int = 15
 
 	for _, file := range files {
+		if !strings.Contains(file.Name(), "png") {
+			// ignore non-image files (like .DS_Store)
+			continue
+		}
 		filePath := "res/frameworks/" + file.Name()
 		image := getImageRGBA(filePath)
 
@@ -250,7 +257,7 @@ func drawFrameworks(img *image.RGBA, fontCtx *freetype.Context) {
 
 func drawContributions(img *image.RGBA, fontCtx *freetype.Context) {
 	// fetch repos
-	// TODO: order repositories by date contributed to
+	// TODO: #1 order repositories by date contributed to
 	repos := githubApi.FetchReposContributedTo(readToken())
 
 	// Draw title
