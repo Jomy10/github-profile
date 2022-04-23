@@ -153,8 +153,6 @@ func drawLanguages(img *image.RGBA, fontCtx *freetype.Context) {
 			// TODO: #2 add logo width and height. height will be = logoSize while width will be changed to accomodate
 			//	     more languages so that there are only 2 rows of languages
 			logoImg = getMultiLangImage(_langs, logoSize)
-
-			jimage.ExportImage(logoImg, "test.png")
 		} else {
 			logoImg = getLangLogo(lang)
 		}
@@ -208,8 +206,6 @@ func getMultiLangImage(langs []string, imgSize int) *image.RGBA {
 		}
 	}
 
-	jimage.ExportImage(dst, "test.png")
-
 	return dst
 }
 
@@ -225,9 +221,9 @@ func drawFrameworks(img *image.RGBA, fontCtx *freetype.Context) {
 	}
 
 	amtOfFramworks := len(files)
-	const maxFrameworkRows int = 4
+	const maxFrameworkRows int = 3
 
-	framworksPerRow := int(math.Ceil(math.Max(float64(amtOfFramworks)/4, 2)))
+	framworksPerRow := int(math.Ceil(math.Max(float64(amtOfFramworks)/float64(maxFrameworkRows), 2)))
 
 	row := 0
 	i := 0
